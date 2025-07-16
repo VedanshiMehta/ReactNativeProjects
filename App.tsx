@@ -1,74 +1,126 @@
 import React, { useState } from 'react'
 import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import ButtonShape from './components/ButtonShape'
 
 export default function App() {
-  const [backgroundColor,setBackgroundColor ]= useState("#FFFFFFF")
-  var [shape,setShape ]=useState('')
-  function generateBackGroundColor(){
+  const [rectBackgroundColor,setRectBackgroundColor]= useState("#FFFFFFF")
+    const [capsuleBackgroundColor,setcapsuleBackgroundColor]= useState("#FFFFFFF")
+  var [shape,setShape ]=useState("")
+  function setShapeAndGenerateColor(){
+    setShape(shape)
+    generateColor()
+     
+  }
+  function generateColor()
+  {
     const hexList = '0123456789ABCDEF'
-    let color ='#'
+    let color ='#' 
     for (let i = 0; i< 6; i++) {
        color += hexList[Math.floor(Math.random()*16)]
     }
-    setBackgroundColor(color)
+    switch (shape.toLowerCase()) {
+      case 'rectangle':
+          setRectBackgroundColor(color)
+        break;
+      case 'capsule':
+          setcapsuleBackgroundColor(color)
+        break;
+    
+      default:
+        setRectBackgroundColor("#FFFFFF")
+        setcapsuleBackgroundColor("#FFFFFF")
+        break;
+    }
   }
  
   return (
     <>
     <StatusBar backgroundColor={"#000000"} />
     <View style={styles.container}>
+      {/* Row One */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style ={[styles.squareActionBtn]}
-        onPress={()=>{}}>
-          <View style = {[styles.squareActionBtn]}>
-            <Text style = {styles.squareActionBtnText}>{shape = 'square'}</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style ={[styles.squareActionBtn]}>
-          <View style = {[styles.squareActionBtn]}>
-            <Text style = {styles.squareActionBtnText}>{shape = 'square'}</Text>
-          </View>
-         </TouchableOpacity>
-        <TouchableOpacity style ={[styles.squareActionBtn]}>
-         <View style = {[styles.squareActionBtn]}>
-            <Text style = {styles.squareActionBtnText}>{shape = 'square'}</Text>
-          </View>
-        </TouchableOpacity>
+        <ButtonShape shape={'rectangle'} 
+        backgroundColor={rectBackgroundColor}
+         onPress={ ()=> {
+            shape = 'rectangle'
+              setShapeAndGenerateColor()
+          } } />
+        <ButtonShape shape={'capsule'} 
+        backgroundColor={capsuleBackgroundColor}
+         onPress={ ()=> {
+              shape = 'capsule'
+              setShapeAndGenerateColor()
+          } } />
+        <ButtonShape shape={'rectangle'} 
+        backgroundColor={rectBackgroundColor}
+         onPress={ ()=> {
+            shape = 'rectangle'
+              setShapeAndGenerateColor()
+          } } />  
         </View>
+        {/* Row Two */}
        <View style={styles.buttonContainer}>
-         <TouchableOpacity style ={[styles.squareActionBtn]}>
-            <View style = {[styles.squareActionBtn]}>
-             <Text style = {styles.squareActionBtnText}>{shape = 'square'}</Text>
-            </View>
-        </TouchableOpacity>
-        <TouchableOpacity style ={[styles.squareActionBtn]}>
-          <View style = {[styles.squareActionBtn]}>
-            <Text style = {styles.squareActionBtnText}>{shape = 'square'}</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style ={[styles.squareActionBtn]}>
-          <View style = {[styles.squareActionBtn]}>
-            <Text style = {styles.squareActionBtnText}>{shape = 'square'}</Text>
-          </View>
-        </TouchableOpacity>
+        <ButtonShape shape={'capsule'} 
+        backgroundColor={capsuleBackgroundColor}
+         onPress={ ()=> {
+            shape = 'capsule'
+              setShapeAndGenerateColor()
+          } } />
+        <ButtonShape shape={'rectangle'} 
+        backgroundColor={rectBackgroundColor}
+         onPress={ ()=> {
+              shape = 'rectangle'
+              setShapeAndGenerateColor()
+          } } />
+        <ButtonShape shape={'capsule'} 
+        backgroundColor={capsuleBackgroundColor}
+         onPress={ ()=> {
+            shape = 'capsule'
+              setShapeAndGenerateColor()
+          } } />  
         </View>
+        {/* Row Three */}
+        <View style={styles.buttonContainer}>
+        <ButtonShape shape={'rectangle'} 
+        backgroundColor={rectBackgroundColor}
+         onPress={ ()=> {
+            shape = 'rectangle'
+              setShapeAndGenerateColor()
+          } } />
+        <ButtonShape shape={'capsule'} 
+        backgroundColor={capsuleBackgroundColor}
+         onPress={ ()=> {
+              shape = 'capsule'
+              setShapeAndGenerateColor()
+          } } />
+        <ButtonShape shape={'rectangle'} 
+        backgroundColor={rectBackgroundColor}
+         onPress={ ()=> {
+            shape = 'rectangle'
+              setShapeAndGenerateColor()
+          } } />  
+        </View>
+          {/* Row Four */}
        <View style={styles.buttonContainer}>
-         <TouchableOpacity style ={[styles.squareActionBtn]}>
-          <View style = {[styles.squareActionBtn]}>
-          <Text style = {styles.squareActionBtnText}>{shape = 'square'}</Text>
+        <ButtonShape shape={'capsule'} 
+        backgroundColor={capsuleBackgroundColor}
+         onPress={ ()=> {
+            shape = 'capsule'
+              setShapeAndGenerateColor()
+          } } />
+        <ButtonShape shape={'rectangle'} 
+        backgroundColor={rectBackgroundColor}
+         onPress={ ()=> {
+              shape = 'rectangle'
+              setShapeAndGenerateColor()
+          } } />
+        <ButtonShape shape={'capsule'} 
+        backgroundColor={capsuleBackgroundColor}
+         onPress={ ()=> {
+            shape = 'capsule'
+              setShapeAndGenerateColor()
+          } } />  
         </View>
-        </TouchableOpacity>
-         <TouchableOpacity style ={[styles.squareActionBtn]}>
-        <View style = {[styles.squareActionBtn]}>
-          <Text style = {styles.squareActionBtnText}>{shape = 'square'}</Text>
-        </View>
-        </TouchableOpacity>
-         <TouchableOpacity style ={[styles.squareActionBtn]}>
-        <View style = {[styles.squareActionBtn]}>
-          <Text style = {styles.squareActionBtnText}>{shape = 'square'}</Text>
-        </View>
-        </TouchableOpacity>
-      </View>
     </View>
     </>
   )
@@ -84,18 +136,4 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between'
     } ,
-    squareActionBtn: {
-      flex: 1,
-      margin:2,
-      backgroundColor: '#FFFFFF',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    squareActionBtnText:{
-      color:'#000000',
-      fontSize:18,
-      fontWeight:500,
-      textTransform:'uppercase'
-    },
-
 })
