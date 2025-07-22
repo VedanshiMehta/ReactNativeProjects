@@ -10,6 +10,11 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+         jcenter() {
+            content {
+                includeGroup("com.google.android.exoplayer")
+            }
+        }
     }
     dependencies {
         classpath("com.android.tools.build:gradle")
