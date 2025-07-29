@@ -6,11 +6,13 @@ export const RoutesConstants ={
     Home: 'Home'
 } as const;
 
-export type RootStackParamList={
-    [RoutesConstants.Login]:undefined;
-    [RoutesConstants.Register]:undefined;
-    [RoutesConstants.Home]:undefined;
+export type AuthStackParamList = {
+    [RoutesConstants.Login]: undefined;
+    [RoutesConstants.Register]: undefined;
+};
+export type AppStackParamList = {
+    [RoutesConstants.Home]: undefined;
+};
 
-}
-
-export const Stack = createNativeStackNavigator<RootStackParamList>()
+export const AppStackNavigator = createNativeStackNavigator<AppStackParamList>()
+export const AuthStackNavigator = createNativeStackNavigator<AuthStackParamList>()

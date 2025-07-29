@@ -1,21 +1,21 @@
 
 import React from 'react'
-import { RoutesConstants, Stack } from '../constants/RoutesConstants'
 import Login from '../../src/login/presentation/screens/Login'
 import Register from '../../src/register/presentation/screens/Register'
+import { AuthStackNavigator, RoutesConstants, } from '../constants/RoutesConstants'
 
 function AuthStack() {
   return (
-    <Stack.Navigator initialRouteName={RoutesConstants.Login}>
-      <Stack.Screen name={RoutesConstants.Login} component={Login} options={{
+    <AuthStackNavigator.Navigator initialRouteName={RoutesConstants.Login}>
+      <AuthStackNavigator.Screen name={RoutesConstants.Login} component={Login} options={{
         title: "Login",
         headerTitleAlign: 'center'
       }} />
-      <Stack.Screen name={RoutesConstants.Register} component={Register} options={{
+      <AuthStackNavigator.Screen name={RoutesConstants.Register} component={Register} options={{
         title: "Sign Up",
         headerTitleAlign: 'center'
       }} />
-    </Stack.Navigator>
+    </AuthStackNavigator.Navigator>
   )
 }
 

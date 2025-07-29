@@ -1,13 +1,15 @@
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, {useContext } from 'react'
+import React, { useContext } from 'react';
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-import * as Yup from 'yup'
-import { Formik } from 'formik'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList, RoutesConstants } from '../../../../core/constants/RoutesConstants';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { InferType } from 'yup';
+import { AuthStackParamList, RoutesConstants } from '../../../../core/constants/RoutesConstants';
 import AppwriteContext from '../../../../core/services/AppwriteContext';
 import Utils from '../../../../core/utlis/Utils';
-import { InferType } from 'yup';
+
+
 const emailRegex =
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const passwordRegex = /^[a-zA-Z0-9!@#$%^&*]{4,8}$/;
@@ -21,28 +23,24 @@ const UserLoginSchema = Yup.object().shape({
     .required('Password is required.')
 })
 
- type  LoginProps = NativeStackScreenProps<RootStackParamList,typeof RoutesConstants.Login>
+type  LoginProps = NativeStackScreenProps<AuthStackParamList,typeof RoutesConstants.Login>
 type UserLoginValues = InferType<typeof UserLoginSchema>;
+
 const Login=({navigation}:LoginProps)=>{
 
 const {appwrite,setIsLoggedIn}= useContext(AppwriteContext)
 
 const handleLogin = ({ userDetails }: { userDetails: UserLoginValues }) => {
-   appwrite.loginUserAccount(userDetails).then((response)=>{
+   appwrite.login(userDetails).then((response)=>{
     if(response)
     {
-        Utils.showSnackBar('Login Successfully')
         setIsLoggedIn(true)
+        Utils.showSnackBar('Login Successfully')
     }
-    
+   }).catch(e=>{
+    console.log(e);
    })
 }
- const handleLogout = ()=>{
-     appwrite.logoutUser().then(()=>{
-          setIsLoggedIn(false)
-          Utils.showSnackBar('Logout successfully.',false)
-     })
-  } 
   return (
   
     <View style ={styles.container}>
@@ -103,11 +101,6 @@ const handleLogin = ({ userDetails }: { userDetails: UserLoginValues }) => {
                     style={styles.loginButton}
                     onPress={()=>handleSubmit()}>
                         <Text style={styles.buttonText}>Login</Text>
-                    </TouchableOpacity>
-                     <TouchableOpacity 
-                    style={styles.loginButton}
-                    onPress={()=>handleLogout()}>
-                        <Text style={styles.buttonText}>Logout</Text>
                     </TouchableOpacity>
                 </>
                )}

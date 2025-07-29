@@ -1,94 +1,86 @@
-import { ID,Account,Client} from 'appwrite'
-import Config from 'react-native-config'
-import Utils from '../utlis/Utils';
+import { Account, Client, ID } from 'appwrite';
+import Config from 'react-native-config';
+
+import Snackbar from 'react-native-snackbar';
 
 const appwriteClient = new Client()
 
 const APPWRITE_ENDPOINT: string = Config.APPWRITE_ENDPOINT!;
-const APPWRITE_PROJECT_ID: string = Config.APPWRITE_PROJECT_ID!;
-if (!APPWRITE_ENDPOINT || !APPWRITE_PROJECT_ID) {
-  console.error("Missing AppWrite environment variables")
-}
-type CreateUserAccount ={
+const APPWRITE_PROJECT_ID:string = Config.APPWRITE_PROJECT_ID!;
+
+type CreateUserAccount = {
     email: string;
     password: string;
-    name: string;
+    name: string
 }
-
-type LoginUserAccount ={
+type LoginUserAccount = {
     email: string;
     password: string;
 }
 
-class AppwriteService{
+class AppwriteService {
     account;
-    ///Set the config
+
     constructor(){
-        appwriteClient.setEndpoint(APPWRITE_ENDPOINT)
-        console.log(APPWRITE_ENDPOINT)
-        appwriteClient.setProject(APPWRITE_PROJECT_ID)
-        console.log(APPWRITE_ENDPOINT)
-        this.account = new Account(appwriteClient);
+        appwriteClient
+        .setEndpoint(APPWRITE_ENDPOINT)
+        .setProject(APPWRITE_PROJECT_ID)
+
+        this.account = new Account(appwriteClient)
     }
 
-    /// create a new record
-    async createAccount({email,password,name}:CreateUserAccount) {
-        try{
-
-           const userAccount = await this.account.create(
+    //create a new record of user inside appwrite
+    async createAccount({email, password, name}: CreateUserAccount){
+        try {
+            const userAccount = await this.account.create(
                 ID.unique(),
                 email,
                 password,
                 name
             )
-            if(userAccount)
-            {
-                return this.loginUserAccount({email,password})
-            }else
-            {
-                return userAccount;
+            if (userAccount) {
+                return this.login({email, password})
+            } else {
+                return userAccount
             }
-        }catch(error)
-        {
-            Utils.showSnackBar(String(error),true)
-            console.log("Appwrite service :: createAccount() ::"+error)
+        } catch (error) {
+            Snackbar.show({
+                text: String(error),
+                duration: Snackbar.LENGTH_LONG
+            })
+            console.log("Appwrite service :: createAccount() :: " + error);
+            
         }
-        
     }
-    /// login user
-    async loginUserAccount({email,password}:LoginUserAccount) {
-        try{
-           return await this.account.createEmailPasswordSession(
-                email,
-                password,
-            )
-        }catch(error)
-        {
-            Utils.showSnackBar(String(error),true)
-            console.log("Appwrite service :: loginUSerAccount() ::"+error)
+
+    async login({email, password}: LoginUserAccount){
+        try {
+            return await this.account.createEmailPasswordSession(email, password)
+        } catch (error) {
+            Snackbar.show({
+                text: String(error),
+                duration: Snackbar.LENGTH_LONG
+            })
+            console.log("Appwrite service :: loginAccount() :: " + error);
+            
         }
-        
     }
 
     async getCurrentUser(){
-        try{
-           return await this.account.get()
-        }catch(error)
-        {
-            console.log("Appwrite service :: getCurrentUser() ::"+error)
+        try {
+            return await this.account.get()
+        } catch (error) {
+            console.log("Appwrite service :: getCurrentAccount() :: " + error);
         }
     }
 
-    async logoutUser()
-    {
-        try{
-           return await this.account.deleteSession('current')
-        }catch(error)
-        {
-            Utils.showSnackBar(String(error),true)
-            console.log("Appwrite service :: getCurrentUser() ::"+error)
+    async logout(){
+        try {
+            return await this.account.deleteSessions()
+        } catch (error) {
+            console.log("Appwrite service :: getCurrentAccount() :: " + error);
         }
     }
 }
 
-export default  AppwriteService
+export default AppwriteService

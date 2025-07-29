@@ -1,12 +1,12 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { FAB } from '@rneui/themed'
 import React, { useContext, useEffect, useState } from 'react'
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import { RootStackParamList, RoutesConstants } from '../../../../core/constants/RoutesConstants'
+import { AppStackParamList, RoutesConstants } from '../../../../core/constants/RoutesConstants'
 import AppwriteContext from '../../../../core/services/AppwriteContext'
 import Utils from '../../../../core/utlis/Utils'
-import { FAB } from '@rneui/themed'
 
-type HomeProps = NativeStackScreenProps<RootStackParamList, typeof RoutesConstants.Home>
+type HomeProps = NativeStackScreenProps<AppStackParamList, typeof RoutesConstants.Home>
 
 type UserDetail ={
   name: string;
@@ -17,7 +17,7 @@ const Home = ({navigation}:HomeProps) => {
   const {appwrite,setIsLoggedIn}= useContext(AppwriteContext)
   const[userData,setUserData]= useState<UserDetail>()
   const handleLogout = ()=>{
-     appwrite.logoutUser().then(()=>{
+     appwrite.logout().then(()=>{
           setIsLoggedIn(false)
           Utils.showSnackBar('Logout successfully.',false)
      })
