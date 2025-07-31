@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { InferType } from 'yup';
 import { AuthStackParamList, RoutesConstants } from '../../../../core/constants/RoutesConstants';
-import AppwriteContext from '../../../../core/services/AppwriteContext';
+import AppwriteContext from '../../../../core/services/app_write_service/AppwriteContext';
 import Utils from '../../../../core/utlis/Utils';
 
 

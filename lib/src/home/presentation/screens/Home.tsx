@@ -3,7 +3,7 @@ import { FAB } from '@rneui/themed'
 import React, { useContext, useEffect, useState } from 'react'
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { AppStackParamList, RoutesConstants } from '../../../../core/constants/RoutesConstants'
-import AppwriteContext from '../../../../core/services/AppwriteContext'
+import AppwriteContext from '../../../../core/services/app_write_service/AppwriteContext'
 import Utils from '../../../../core/utlis/Utils'
 
 type HomeProps = NativeStackScreenProps<AppStackParamList, typeof RoutesConstants.Home>
