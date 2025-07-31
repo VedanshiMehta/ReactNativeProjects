@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useReducer, useRef, useState } from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -29,8 +29,23 @@ type UserLoginValues = InferType<typeof UserLoginSchema>;
 const Login=({navigation}:LoginProps)=>{
 
 const {appwrite,setIsLoggedIn}= useContext(AppwriteContext)
+const inputRefEmail = useRef<TextInput>(null)
+const inputRefPassword = useRef<TextInput>(null)
+const [focusedInput, setFocusedInput] = useState<'email' | 'password' | null>(null);
+
+useEffect(()=>{
+    inputRefEmail.current?.focus();
+     return()=>{
+        setFocusedInput(null)
+        inputRefEmail.current?.blur()
+        inputRefPassword.current?.blur()
+     }
+},[])
 
 const handleLogin = ({ userDetails }: { userDetails: UserLoginValues }) => {
+       setFocusedInput(null)
+       inputRefEmail.current?.blur()
+        inputRefPassword.current?.blur()
    appwrite.login(userDetails).then((response)=>{
     if(response)
     {
@@ -68,11 +83,16 @@ const handleLogin = ({ userDetails }: { userDetails: UserLoginValues }) => {
                }) => (
                 <>
              
-                   <TextInput style={styles.inputStyle}
+                   <TextInput style={[styles.inputStyle, 
+                   focusedInput ==='email'&& styles.inputFocused, 
+                   touched.email && errors.email &&styles.inputError]}
+                    ref={inputRefEmail}
                     value={values.email}
                     onChangeText={handleChange('email')}
                     onBlur={handleBlur('email')}
                     maxLength={50}
+                    onFocus={()=> setFocusedInput('email')}
+                    onSubmitEditing={()=> inputRefPassword.current?.focus()}
                     placeholder='Email'
                     placeholderTextColor={'#000000'}
                     keyboardType= 'email-address'
@@ -81,13 +101,19 @@ const handleLogin = ({ userDetails }: { userDetails: UserLoginValues }) => {
                     {touched.email && errors.email && (
                         <Text style={styles.errorText}>{errors.email}</Text>
                     )}
-                   <TextInput style={styles.inputStyle}
+                   <TextInput style={[
+                             styles.inputStyle,
+                             focusedInput === 'password' && styles.inputFocused,
+                             touched.password && errors.password &&styles.inputError
+                         ]}
+                    ref={inputRefPassword}
                     value={values.password}
                     onChangeText={handleChange('password')}
                     placeholder='Password'
                     placeholderTextColor={'#000000'}
                     maxLength={8}
                     onBlur={handleBlur('password')}
+                    onFocus={() => setFocusedInput('password')}
                     secureTextEntry={true}
                     keyboardType='numeric'
                     returnKeyType='done'
@@ -159,8 +185,16 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
     elevation: 1,
     },
+    inputFocused: {
+    borderColor:'#eb3b5a', 
+    borderWidth:1,
+    },
+    inputError: {
+    borderColor:'red', 
+    borderWidth:1,
+    },
     errorText:{
-        color:'#eb2f06',
+        color:'red',
         fontSize: 16,
         fontWeight:500,
         alignSelf:'stretch'
