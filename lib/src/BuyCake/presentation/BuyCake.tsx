@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         marginVertical:10,
     },
     cakeCountText:{
-        color:'#FFFFFF',
+        color:'#000000',
         fontSize:18,
         fontWeight:600
     },

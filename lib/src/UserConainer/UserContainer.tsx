@@ -71,7 +71,7 @@ export default connect(mapStateToProps,mapDispatchToProps)(UserContainer)
 
 const styles = StyleSheet.create({
  errorText:{
-        color:'#FFFFFF',
+        color:'#000000',
         fontSize:18,
         fontWeight:600
     },
