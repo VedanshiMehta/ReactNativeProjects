@@ -1,12 +1,18 @@
-import { SafeAreaView, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React from 'react'
 import Router from '../core/Router/Router'
+import { Provider } from 'react-redux'
+import store from '../core/services/redux/store'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Router/>
-     </SafeAreaView>
+
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Provider store={store}>
+        <Router />
+      </Provider>
+    </GestureHandlerRootView>
   )
 }
 
