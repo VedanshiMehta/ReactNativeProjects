@@ -4,14 +4,16 @@ import Router from '../core/Router/Router'
 import { Provider } from 'react-redux'
 import store from '../core/services/redux/store'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
+const queryClient = new QueryClient();
 const App = () => {
   return (
 
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
         <Router />
-      </Provider>
+      </QueryClientProvider>
     </GestureHandlerRootView>
   )
 }

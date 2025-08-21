@@ -16,6 +16,7 @@ type AddPostsContainerProps = PropsWithChildren<ScreenProps & {
   addPosts: (postData:PostData) => void;
 }>;
 const AddPosts = (props:AddPostsContainerProps) => {
+
    const [title,setTitle]= useState<string>('')
     const [body,setBody]=useState<string>('')
     const inputRefTitle = useRef<TextInput>(null)
