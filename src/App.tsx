@@ -63,7 +63,7 @@ function App (): JSX.Element {
         keyExtractor={item => item.name}
         renderItem={({item})=>(
           <Pressable style ={[styles.button,
-            targetCurrency ===item.name && styles.selected
+            targetCurrency === item.name && styles.selected
           ]}
           onPress={()=> covertCurrencyPressed(item)}>
             <CurrencyButton {...item} />
