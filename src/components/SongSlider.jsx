@@ -5,6 +5,7 @@ import Slider from '@react-native-community/slider';
 
 export default function SongSlider() {
   const {position,duration} = useProgress()
+  
   return (
     <View>
       <Slider

@@ -10,6 +10,7 @@ const {width}= Dimensions.get('window')
 
 const MusicPlayer = () => {
     const [track,setTrack]= useState<Track|null>()
+    
     useTrackPlayerEvents([Event.PlaybackActiveTrackChanged],async event => {
         switch(event.type){
             case Event.PlaybackActiveTrackChanged:
@@ -20,6 +21,7 @@ const MusicPlayer = () => {
               break;
         }
     })
+    //Image
     const renderArtWork=()=>{
         return (<View style={styles.listArtWrapper}>
             <View style={styles.albumContainer}>
